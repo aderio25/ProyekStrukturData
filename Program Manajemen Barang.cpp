@@ -2,7 +2,7 @@
  PROYEK
  STRUKTUR DATA & ALGORITMA
  MANAJEMEN BARANG
- VERSI 0.8
+ VERSI 0.85
 */
 
 #include <iostream>
@@ -20,6 +20,27 @@ struct Node
 };
 
 struct Node *head = NULL;
+
+void intro()
+{
+    cout<<endl;
+    cout<<"            PROGRAM MANAJEMEN             "<<endl;
+    cout<<"                 BARANG                   "<<endl;
+    cout<<"=========================================="<<endl;
+    cout<<"******************************************"<<endl;
+    cout<<"** Selamat Datang !                     **"<<endl;
+    cout<<"** Versi 0.8                            **"<<endl;
+    cout<<"** Program Ini Dapat Diandalkan Untuk   **"<<endl;
+    cout<<"** Menambah Data Barang, Mengubah Data  **"<<endl;
+    cout<<"** Barang, Serta Mencari Data Barang    **"<<endl;
+    cout<<"******************************************"<<endl;
+    cout<<"=========================================="<<endl;
+    cout<<"         Silakan Memulai Program          "<<endl;
+    cout<<"         Dengan Input Data Barang         "<<endl;
+    cout<<"              Terlebih Dahulu             "<<endl;
+    cout<<"=========================================="<<endl;
+    cout<<endl;
+}
 
 void tambahBelakang(string b, int c)
 {
@@ -127,6 +148,7 @@ int main()
     int patokan = 0;
     bool jalan = true;
 
+    intro();
 
     while(jalan)
     {
