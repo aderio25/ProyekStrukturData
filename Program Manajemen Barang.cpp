@@ -2,13 +2,16 @@
  PROYEK
  STRUKTUR DATA & ALGORITMA
  MANAJEMEN BARANG
- VERSI 0.92
+ RPL UPI 2020
+ VERSI 0.99
+ RABU, 25 MARET 2020
 */
 
 /* Library yang diperlukan */
 #include <iostream> /* Standar C++ */
 #include <iomanip> /* Buat setw() */
 #include <stdlib.h> /* Buat System("clear") */
+#include <time.h> /* Buat Generate Waktu */
 
 using namespace std;
 
@@ -37,7 +40,7 @@ void intro()
     cout<<"******************************************"<<endl;
     cout<<"*                                        *"<<endl;
     cout<<"*  Selamat Datang !                      *"<<endl;
-    cout<<"*  Versi 0.9                             *"<<endl;
+    cout<<"*  Versi 0.99                            *"<<endl;
     cout<<"*  Program Ini Dapat Diandalkan Untuk    *"<<endl;
     cout<<"*  Menambah Data Barang, Mengubah Data   *"<<endl;
     cout<<"*  Barang, Serta Mencari Data Barang     *"<<endl;
@@ -177,14 +180,38 @@ void cariElemen(string cari)
 
 }
 
+/* Prosedur Buat Menampilkan Output Keluar Program */
+void credits()
+{
+    cout<<"-------------------------------------------------------------------"<<endl;
+    cout<<endl;
+    cout<<"Program Ini Dibuat Dalam Rangka Memenuhi Tugas Mata"<<endl;
+    cout<<"Kuliah Struktur Data dan Algoritma RPL UPI 2020"<<endl;
+    cout<<endl;
+    cout<<"-------------------------------------------------------------------"<<endl;
+    cout<<endl;
+    cout<<setw(24)<<" Credits : "<<endl;
+    cout<<endl;
+    cout<<setw(30)<<"Muhammad Raihan S.P.P."<<endl;
+    cout<<endl;
+    cout<<setw(30)<<"Muhammad Daffa Satrio D."<<endl;
+    cout<<endl;
+    cout<<setw(30)<<"Mujtahidul Haq Mahyunda"<<endl;
+    cout<<endl;
+    cout<<"-------------------------------------------------------------------"<<endl;
+}
+
 int main()
 {
     /* Deklarasi yang Dibutuhkan */
     Node data;
     string namaBenda, cariBenda, bendaHapus;
-    int ans,jumlahBenda;
-    int urut = 1;
-    int patokan = 0;
+    string teks[3] = {"Program Ini Dibuat Menggunakan Bahasa Pemrograman C++",
+                      "Menggunakan Program Ini, Berarti Anda Mengurangi Penggunaan Kertas",
+                      "Pada tahun 2017, Terdapat 5.76 Juta Ton Sampah Kertas, Mari Kita Digitalisasi"
+                     };
+    int jumlahBenda;
+    int *ans = nullptr; /* Deklarasi Pointer */
     bool jalan = true;
 
     /* Tampilan Header Program */
@@ -193,6 +220,9 @@ int main()
     /* Program Berjalan */
     while(jalan)
     {
+        /* Alokasi Memori  */
+        ans = new int;
+
         cout<<"Masukan Nama Benda : ";
         cin>>namaBenda;
 
@@ -219,30 +249,47 @@ int main()
         cout<<setw(1)<<"[1] Tambah Data "<<setw(15)<<"[3] Cari Data"<<endl;
         cout<<setw(1)<<"[2] Hapus Data"<<setw(12)<<"[4] Exit"<<endl;
         cout<<"-----------------------------------"<<endl;
-        cin>>ans;
+        cin>>*ans;
 
         cout<<endl;
 
         /* Hasil Pilihannya */
-        if(ans==1)
+        if(*ans==1)
             jalan = true;
-        else if(ans==2)
+        else if(*ans==2)
         {
             cout<<"Masukan nama yang ingin dihapus"<<endl;
             cin>>bendaHapus;
             hapusElemen(bendaHapus);
             goto menu;
         }
-        else if(ans==3)
+        else if(*ans==3)
         {
             cout<<"Masukan nama yang ingin dicari "<<endl;
             cin>>cariBenda;
             cariElemen(cariBenda);
             goto menu;
         }
-        else if(ans==4)
+        else if(*ans==4)
         {
+            system("clear"); /* Membersihkan Teks */
+            srand(time(NULL)); /* Random Seed */
+            int random = rand()%3; /* Deklarasi Random */
+
+            cout<<setw(22)<<"Fakta :"<<endl;
+            cout<<endl;
+            cout<<teks[random]<<endl;
+
+            credits();
+
+            cout<<setw(24)<<"Terima Kasih"<<endl;
+
             return 0;
         }
+
+        /* Delete Memori */
+        delete ans;
+
     }
+
 }
