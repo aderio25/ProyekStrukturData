@@ -3,8 +3,20 @@
  STRUKTUR DATA & ALGORITMA
  MANAJEMEN BARANG
  RPL UPI 2020
- VERSI 0.99
- RABU, 25 MARET 2020
+ VERSI 1.00
+ KAMIS, 26 MARET 2020
+*/
+
+/*
+ JIka anda ingin mengunduh atau berkontribusi
+ pada program ini anda dapat menuju link berikut
+ http://gg.gg/gzg1v
+*/
+
+/*
+ Jika anda ingin mengetahui bagaimana penggunaan
+ program ini anda dapat menuju link berikut
+ http://gg.gg/gzfzu
 */
 
 /* Library yang diperlukan */
@@ -40,12 +52,14 @@ void intro()
     cout<<"******************************************"<<endl;
     cout<<"*                                        *"<<endl;
     cout<<"*  Selamat Datang !                      *"<<endl;
-    cout<<"*  Versi 0.99                            *"<<endl;
+    cout<<"*  Versi 1.00                            *"<<endl;
     cout<<"*  Program Ini Dapat Diandalkan Untuk    *"<<endl;
     cout<<"*  Menambah Data Barang, Mengubah Data   *"<<endl;
     cout<<"*  Barang, Serta Mencari Data Barang     *"<<endl;
     cout<<"*                                        *"<<endl;
     cout<<"******************************************"<<endl;
+    cout<<" Unduh Source Code : http://gg.gg/gzg1v   "<<endl;
+    cout<<" Unduh Manual      : http://gg.gg/gzfzu   "<<endl;
     cout<<"=========================================="<<endl;
     cout<<"         Silakan Memulai Program          "<<endl;
     cout<<"         Dengan Input Data Barang         "<<endl;
@@ -223,7 +237,7 @@ int main()
         /* Alokasi Memori  */
         ans = new int;
 
-        cout<<"Masukan Nama Benda : ";
+        cout<<"Masukan Nama Barang : ";
         cin>>namaBenda;
 
         cout<<"Masukan Jumlah : ";
