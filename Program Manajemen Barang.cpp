@@ -2,7 +2,7 @@
  PROYEK
  STRUKTUR DATA & ALGORITMA
  MANAJEMEN BARANG
- VERSI 0.85
+ VERSI 0.9
 */
 
 #include <iostream>
@@ -26,6 +26,7 @@ void intro()
     cout<<endl;
     cout<<"            PROGRAM MANAJEMEN             "<<endl;
     cout<<"                 BARANG                   "<<endl;
+    cout<<"                                          "<<endl;
     cout<<"=========================================="<<endl;
     cout<<"******************************************"<<endl;
     cout<<"** Selamat Datang !                     **"<<endl;
@@ -74,25 +75,37 @@ void hapusElemen(string cari)
     struct Node *ptr2;
 
     if(head->next==NULL)
-        cout<<"Error";
+        head=NULL;
     else
     {
-         ptr1 = head;
-         while((ptr1->next!=NULL)&&(ptr1->nama!=cari))
+         if(head->nama==cari)
          {
-            ptr2 = ptr1;
-            ptr1 = ptr1->next;
-         }
-         if(ptr1->nama==cari)
-         {
-            ptr2->next = ptr1->next;
+            ptr1 = head;
+            head = head->next;
+            ptr1->next = NULL;
             delete ptr1;
-            cout<<"Deleted";
          }
          else
          {
-            cout<<"Data tidak ditemukan";
-         }
+            ptr1 = head;
+            while((ptr1->next!=NULL)&&(ptr1->nama!=cari))
+            {
+                ptr2 = ptr1;
+                ptr1 = ptr1->next;
+            }
+            if(ptr1->nama==cari)
+            {
+                ptr2->next = ptr1->next;
+                delete ptr1;
+                system("clear");
+                cout<<"-> "<<cari<<" Terhapus "<<endl;
+                cout<<endl;
+            }
+            else
+            {
+                cout<<"Data tidak ditemukan"<<endl;
+            }
+        }
     }
 
 }
@@ -129,8 +142,11 @@ void cariElemen(string cari)
     }
     if(temp->nama==cari)
     {
+        system("clear");
         cout<<"Data Ditemukan"<<endl;
-        cout<<setw(10)<<temp->nama<<setw(5)<<temp->jumlah<<endl;
+        cout<<"Nama Barang : "<<temp->nama<<endl;
+        cout<<"Jumlah : "<<temp->jumlah<<endl;
+        cout<<endl;
     }
     else
     {
@@ -170,10 +186,11 @@ int main()
 
         cout<<endl;
 
-        cout<<"---------------------------------------------"<<endl;
+        cout<<"-----------------------------------"<<endl;
         cout<<"Silakan Pilih : "<<endl;
-        cout<<setw(1)<<"[1]Tambah Data "<<setw(15)<<"[2]Hapus Data"<<setw(15)<<"[3]Cari Data"<<endl;
-        cout<<"---------------------------------------------"<<endl;
+        cout<<setw(1)<<"[1] Tambah Data "<<setw(15)<<"[3] Cari Data"<<endl;
+        cout<<setw(1)<<"[2] Hapus Data"<<setw(12)<<"[4] Exit"<<endl;
+        cout<<"-----------------------------------"<<endl;
         cin>>ans;
 
         cout<<endl;
