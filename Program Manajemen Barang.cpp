@@ -2,15 +2,19 @@
  PROYEK
  STRUKTUR DATA & ALGORITMA
  MANAJEMEN BARANG
- VERSI 0.9
+ VERSI 0.92
 */
 
-#include <iostream>
-#include <iomanip>
-#include <stdlib.h>
+/* Library yang diperlukan */
+#include <iostream> /* Standar C++ */
+#include <iomanip> /* Buat setw() */
+#include <stdlib.h> /* Buat System("clear") */
 
 using namespace std;
 
+/*  Buat Struct Nyimpen Node
+    Ada Nama Barang, dan
+    Jumlah Barang */
 struct Node
 {
     string nama;
@@ -19,8 +23,10 @@ struct Node
     struct Node* next;
 };
 
+/* Nandain head jadi null */
 struct Node *head = NULL;
 
+/* Prosedur Untuk Header AWal Program */
 void intro()
 {
     cout<<endl;
@@ -29,11 +35,13 @@ void intro()
     cout<<"                                          "<<endl;
     cout<<"=========================================="<<endl;
     cout<<"******************************************"<<endl;
-    cout<<"** Selamat Datang !                     **"<<endl;
-    cout<<"** Versi 0.8                            **"<<endl;
-    cout<<"** Program Ini Dapat Diandalkan Untuk   **"<<endl;
-    cout<<"** Menambah Data Barang, Mengubah Data  **"<<endl;
-    cout<<"** Barang, Serta Mencari Data Barang    **"<<endl;
+    cout<<"*                                        *"<<endl;
+    cout<<"*  Selamat Datang !                      *"<<endl;
+    cout<<"*  Versi 0.9                             *"<<endl;
+    cout<<"*  Program Ini Dapat Diandalkan Untuk    *"<<endl;
+    cout<<"*  Menambah Data Barang, Mengubah Data   *"<<endl;
+    cout<<"*  Barang, Serta Mencari Data Barang     *"<<endl;
+    cout<<"*                                        *"<<endl;
     cout<<"******************************************"<<endl;
     cout<<"=========================================="<<endl;
     cout<<"         Silakan Memulai Program          "<<endl;
@@ -43,6 +51,7 @@ void intro()
     cout<<endl;
 }
 
+/* Prosedur Buat Nambah Data */
 void tambahBelakang(string b, int c)
 {
     struct Node *temp = new Node;
@@ -69,15 +78,18 @@ void tambahBelakang(string b, int c)
 
 }
 
+/* Prosedur Buat Hapus Data */
 void hapusElemen(string cari)
 {
     struct Node *ptr1;
     struct Node *ptr2;
 
+    /* Kalau Satu-Satunya */
     if(head->next==NULL)
         head=NULL;
     else
     {
+         /* Kalau Head sama Dengan yang dicari */
          if(head->nama==cari)
          {
             ptr1 = head;
@@ -85,6 +97,7 @@ void hapusElemen(string cari)
             ptr1->next = NULL;
             delete ptr1;
          }
+         /* Kalau Head Tidak Sama Dengan Yang Dicari */
          else
          {
             ptr1 = head;
@@ -110,8 +123,10 @@ void hapusElemen(string cari)
 
 }
 
+/* Prosedut Untuk Menampilkan Data*/
 void tampilkan()
 {
+    /* Ketika Data Kosong */
     if(head==NULL)
         return;
     struct Node *temp = head;
@@ -121,6 +136,7 @@ void tampilkan()
     cout<<setw(9)<<"Nama"<<setw(8)<<"Qty"<<endl;
     cout<<"================="<<endl;
 
+    /* Looping Menampilkan */
     while(temp!=NULL)
     {
 
@@ -130,16 +146,21 @@ void tampilkan()
     }
 }
 
+/* Prosedur Untuk Mencari Elemen */
 void cariElemen(string cari)
 {
+    /* Ketika Data Kosong */
     if(head==NULL)
         return;
     struct Node *temp = head;
 
+    /* Looping */
     while((temp!=NULL)&&(temp->nama!=cari))
     {
         temp = temp->next;
     }
+
+    /* Ketika Sesuai Dengan yang Dicari */
     if(temp->nama==cari)
     {
         system("clear");
@@ -148,6 +169,7 @@ void cariElemen(string cari)
         cout<<"Jumlah : "<<temp->jumlah<<endl;
         cout<<endl;
     }
+    /* Ketika Tidak Sesuai */
     else
     {
         cout<<"Data Tidak Ditemukan"<<endl;
@@ -157,6 +179,7 @@ void cariElemen(string cari)
 
 int main()
 {
+    /* Deklarasi yang Dibutuhkan */
     Node data;
     string namaBenda, cariBenda, bendaHapus;
     int ans,jumlahBenda;
@@ -164,8 +187,10 @@ int main()
     int patokan = 0;
     bool jalan = true;
 
+    /* Tampilan Header Program */
     intro();
 
+    /* Program Berjalan */
     while(jalan)
     {
         cout<<"Masukan Nama Benda : ";
@@ -174,18 +199,21 @@ int main()
         cout<<"Masukan Jumlah : ";
         cin>>jumlahBenda;
 
+        /* Memanggil Fungsi dengan Parameter */
         tambahBelakang(namaBenda,jumlahBenda);
-
         cout<<endl;
 
+        /* Clear Teks di CMD */
         system("clear");
 
+        /* Tempat Kembali Goto */
         menu:
 
+        /* Menampilkan Data */
         tampilkan();
-
         cout<<endl;
 
+        /* List Pilihan */
         cout<<"-----------------------------------"<<endl;
         cout<<"Silakan Pilih : "<<endl;
         cout<<setw(1)<<"[1] Tambah Data "<<setw(15)<<"[3] Cari Data"<<endl;
@@ -195,6 +223,7 @@ int main()
 
         cout<<endl;
 
+        /* Hasil Pilihannya */
         if(ans==1)
             jalan = true;
         else if(ans==2)
@@ -210,6 +239,10 @@ int main()
             cin>>cariBenda;
             cariElemen(cariBenda);
             goto menu;
+        }
+        else if(ans==4)
+        {
+            return 0;
         }
     }
 }
