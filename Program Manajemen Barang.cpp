@@ -3,7 +3,7 @@
  STRUKTUR DATA & ALGORITMA
  MANAJEMEN BARANG
  RPL UPI 2020
- VERSI 1.00
+ VERSI 1.02
  KAMIS, 26 MARET 2020
 */
 
@@ -52,7 +52,7 @@ void intro()
     cout<<"******************************************"<<endl;
     cout<<"*                                        *"<<endl;
     cout<<"*  Selamat Datang !                      *"<<endl;
-    cout<<"*  Versi 1.00                            *"<<endl;
+    cout<<"*  Versi 1.02                            *"<<endl;
     cout<<"*  Program Ini Dapat Diandalkan Untuk    *"<<endl;
     cout<<"*  Menambah Data Barang, Mengubah Data   *"<<endl;
     cout<<"*  Barang, Serta Mencari Data Barang     *"<<endl;
@@ -95,6 +95,7 @@ void tambahBelakang(string b, int c)
 
 }
 
+
 /* Prosedur Buat Hapus Data */
 void hapusElemen(string cari)
 {
@@ -102,7 +103,7 @@ void hapusElemen(string cari)
     struct Node *ptr2;
 
     /* Kalau Satu-Satunya */
-    if(head->next==NULL)
+    if((head->next==NULL)&&(head->nama==cari))
         head=NULL;
     else
     {
@@ -133,12 +134,14 @@ void hapusElemen(string cari)
             }
             else
             {
-                cout<<"Data tidak ditemukan"<<endl;
+                system("clear");
+                cout<<cari<<" tidak ditemukan"<<endl<<endl;
             }
         }
     }
 
 }
+
 
 /* Prosedut Untuk Menampilkan Data*/
 void tampilkan()
