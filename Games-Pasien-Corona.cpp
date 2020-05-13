@@ -3,7 +3,7 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.2
+ VERSI 0.25
  RABU, 11 MEI 2020
 */
 
@@ -178,6 +178,27 @@ void masukan(int *level)
      cout<<"Total Poin = "<<poin<<endl;
 }
 
+void baseLogic()
+{
+    for(int j=0;j<1;j++)
+    {
+        if(ICU.top > Isolasi.top)
+        {
+            for(int i=ICU.top;i>=0;i--)
+            {
+                cout<<ICU.tmp[i]<<" "<<Isolasi.tmp[i]<<" "<<Pulang.tmp[i]<<endl;
+            }
+        }
+        else
+        {
+            for(int i=Isolasi.top;i>=0;i--)
+            {
+                cout<<ICU.tmp[i]<<" "<<Isolasi.tmp[i]<<" "<<Pulang.tmp[i]<<endl;
+            }
+        }
+    }
+}
+
 int main()
 {
     bool going = true;
@@ -189,6 +210,7 @@ int main()
     cin>>n;
 
     masukan(&n);
+    baseLogic();
 
     return 0;
 
