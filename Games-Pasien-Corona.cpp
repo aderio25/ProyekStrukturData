@@ -3,7 +3,7 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.25
+ VERSI 0.30
  RABU, 11 MEI 2020
 */
 
@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <time.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -20,75 +21,83 @@ struct Stack
     int top;
     string tmp[limit];
 
-    void initialize()
-    {
-        top = -1;
-    }
+    void initialize();
+    bool isEmpty();
+    bool isFull();
+    void pushPasien(string jenis);
+    string popPasien();
+    void tampilkan();
 
-    bool isEmpty()
-    {
-        if(top==-1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    bool isFull()
-    {
-        if(top==limit)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    void pushPasien(string jenis)
-    {
-        if(isFull()==true)
-        {
-            cout<<"Maksimum it cannot be "<<endl;
-        }
-        else
-        {
-            top++;
-            tmp[top] = jenis;
-        }
-    }
-
-    string popPasien()
-    {
-        if(isEmpty()==false)
-        {
-            return tmp[top--];
-        }
-        else
-        {
-            cout<<"Cannot"<<endl;
-        }
-    }
-
-    void tampilkan()
-    {
-        if(isEmpty()==false)
-        {
-            for(int i=top;i>=0;i--)
-            {
-                cout<<tmp[i]<<endl;
-            }
-        }
-        else
-        {
-            cout<<"Cannot";
-        }
-    }
 };
+
+void Stack ::initialize()
+{
+    top = -1;
+}
+
+bool Stack ::isEmpty()
+{
+    if(top==-1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Stack ::isFull()
+{
+    if(top==limit-1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void Stack ::pushPasien(string jenis)
+{
+    if(isFull()==true)
+    {
+        cout<<"Ruangan Penuh"<<endl;
+    }
+    else
+    {
+        top++;
+        tmp[top] = jenis;
+    }
+}
+
+string Stack ::popPasien()
+{
+    if(isEmpty()==true)
+    {
+        cout<<"Ruangan Kosong"<<endl;
+    }
+    else
+    {
+        return tmp[top--];
+    }
+}
+
+void Stack ::tampilkan()
+{
+    if(isEmpty()==false)
+    {
+        for(int i=top;i>=0;i--)
+        {
+            cout<<tmp[i]<<endl;
+        }
+    }
+    else
+    {
+        cout<<"Eror"<<endl;
+    }
+}
 
 Stack ICU;
 Stack Isolasi;
@@ -186,14 +195,14 @@ void baseLogic()
         {
             for(int i=ICU.top;i>=0;i--)
             {
-                cout<<ICU.tmp[i]<<" "<<Isolasi.tmp[i]<<" "<<Pulang.tmp[i]<<endl;
+                cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
             }
         }
         else
         {
             for(int i=Isolasi.top;i>=0;i--)
             {
-                cout<<ICU.tmp[i]<<" "<<Isolasi.tmp[i]<<" "<<Pulang.tmp[i]<<endl;
+                cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
             }
         }
     }
