@@ -3,8 +3,8 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.30
- RABU, 11 MEI 2020
+ VERSI 0.35
+ SABTU, 16 MEI 2020
 */
 
 /* Test Build */
@@ -134,10 +134,10 @@ void masukan(int *level)
 
         if(ans==1)
         {
-            ICU.pushPasien(get);
 
             if(get=="Positif Parah")
             {
+                ICU.pushPasien(get);
                 poin = poin + 10;
                 cout<<"Benar"<<endl;
             }
@@ -150,10 +150,10 @@ void masukan(int *level)
         }
         else if(ans==2)
         {
-            Isolasi.pushPasien(get);
 
             if(get=="Positif Ringan")
             {
+                Isolasi.pushPasien(get);
                 poin = poin + 10;
                 cout<<"Benar"<<endl;
             }
@@ -166,10 +166,10 @@ void masukan(int *level)
         }
         else if(ans==3)
         {
-            Pulang.pushPasien(get);
 
             if(get=="Negatif")
             {
+                Pulang.pushPasien(get);
                 poin = poin + 10;
                 cout<<"Benar"<<endl;
             }
@@ -184,28 +184,84 @@ void masukan(int *level)
         cout<<"----------------"<<endl;
     }
 
-     cout<<"Total Poin = "<<poin<<endl;
+     cout<<"Total Poin = "<<poin<<endl<<endl;
+}
+
+int rawatPasien()
+{
+    int pilihan;
+
+    cout<<"Pilih ruang yang ingin dirawat ";
+    if(pilihan == 1)
+    {
+        cout<<"Anda telah merawat ruangan ICU";
+        return 1;
+    }
+    else if(pilihan == 2)
+    {
+        cout<<"Anda telah merawat ruangan Isolasi";
+        return 1;
+    }
 }
 
 void baseLogic()
 {
     for(int j=0;j<1;j++)
     {
-        if(ICU.top > Isolasi.top)
+        if((ICU.top > Isolasi.top) && (ICU.top > Pulang.top))
         {
             for(int i=ICU.top;i>=0;i--)
             {
                 cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
             }
         }
-        else
+        else if((Isolasi.top > ICU.top) && (Isolasi.top > Pulang.top))
         {
             for(int i=Isolasi.top;i>=0;i--)
             {
                 cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
             }
         }
+        else if((Pulang.top > ICU.top) && (Pulang.top > Isolasi.top))
+        {
+            for(int i=Pulang.top;i>=0;i--)
+            {
+                cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
+            }
+        }
+        else if((ICU.top == Isolasi.top) || (ICU.top == Pulang.top))
+        {
+            for(int i=ICU.top;i>=0;i--)
+            {
+                cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
+            }
+        }
+        else if((Isolasi.top == ICU.top ) || (Isolasi.top == Pulang.top))
+        {
+            for(int i=Isolasi.top;i>=0;i--)
+            {
+                cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
+            }
+        }
+        else if((Pulang.top == ICU.top) || (Pulang.top == Isolasi.top))
+        {
+            for(int i=Pulang.top;i>=0;i--)
+            {
+                cout<<setw(15)<<ICU.tmp[i]<<setw(20)<<Isolasi.tmp[i]<<setw(15)<<Pulang.tmp[i]<<endl;
+            }
+        }
+
     }
+}
+
+void baseLogic2()
+{
+
+}
+
+void resetGame()
+{
+
 }
 
 int main()
@@ -220,6 +276,8 @@ int main()
 
     masukan(&n);
     baseLogic();
+
+
 
     return 0;
 
