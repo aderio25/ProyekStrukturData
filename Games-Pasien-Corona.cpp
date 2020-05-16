@@ -3,7 +3,7 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.35
+ VERSI 0.45
  SABTU, 16 MEI 2020
 */
 
@@ -15,7 +15,10 @@
 
 using namespace std;
 
+int poin = 0;
+bool rawat = false;
 const int limit = 10;
+
 struct Stack
 {
     int top;
@@ -76,7 +79,7 @@ string Stack ::popPasien()
 {
     if(isEmpty()==true)
     {
-        cout<<"Ruangan Kosong"<<endl;
+        cout<<"Kosong"<<endl;
     }
     else
     {
@@ -122,7 +125,7 @@ void masukan(int *level)
     string get;
     int ans;
     int hati = 3;
-    int poin = 0;
+
 
     for(auto i(0);i<*(level)*2;i++)
     {
@@ -187,21 +190,20 @@ void masukan(int *level)
      cout<<"Total Poin = "<<poin<<endl<<endl;
 }
 
-int rawatPasien()
+bool rawatPasien(int pilihan)
 {
-    int pilihan;
-
-    cout<<"Pilih ruang yang ingin dirawat ";
     if(pilihan == 1)
     {
         cout<<"Anda telah merawat ruangan ICU";
-        return 1;
+        return true;
     }
     else if(pilihan == 2)
     {
         cout<<"Anda telah merawat ruangan Isolasi";
-        return 1;
+        return true;
     }
+
+    return false;
 }
 
 void baseLogic()
@@ -254,14 +256,69 @@ void baseLogic()
     }
 }
 
-void baseLogic2()
+string ambilPasien()
 {
+    int a;
+
+    cout<<"Silakan pilih ";
+    cin>>a;
+
+    if(rawat==true)
+    {
+        if(a==1)
+        {
+            return ICU.popPasien();
+        }
+        else if(a==2)
+        {
+            return Isolasi.popPasien();
+        }
+    }
+    else
+    {
+        poin = poin - 10;
+        cout<<"Salah ";
+    }
+}
+
+void tujuanPasien()
+{
+    int a;
+
+    cout<<"Silakan pilih tujuan ";
+    cin>>a;
+
+    if(a==1)
+    {
+        ICU.pushPasien(ambilPasien());
+    }
+    else if(a==2)
+    {
+        Isolasi.pushPasien(ambilPasien());
+    }
+    else if(a==3)
+    {
+        Pulang.pushPasien(ambilPasien());
+    }
 
 }
 
 void resetGame()
 {
+    while(ICU.popPasien() != "Kosong")
+    {
+        ICU.popPasien();
+    }
 
+    while(Isolasi.popPasien() == "Kosong")
+    {
+        Isolasi.popPasien();
+    }
+
+    while(Pulang.popPasien() == "Kosong")
+    {
+        Pulang.popPasien();
+    }
 }
 
 int main()
