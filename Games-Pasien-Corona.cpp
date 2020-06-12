@@ -3,8 +3,8 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.45
- SABTU, 16 MEI 2020
+ VERSI 0.48
+ JUMAT, 12 JUNI 2020
 */
 
 /* Test Build */
@@ -31,6 +31,11 @@ struct Stack
     string popPasien();
     void tampilkan();
 
+};
+
+struct base
+{
+    void baseLogic();
 };
 
 void Stack ::initialize()
@@ -206,7 +211,7 @@ bool rawatPasien(int pilihan)
     return false;
 }
 
-void baseLogic()
+void base:: baseLogic()
 {
     for(int j=0;j<1;j++)
     {
@@ -323,6 +328,8 @@ void resetGame()
 
 int main()
 {
+    base game;
+
     bool going = true;
     int n;
 
@@ -332,7 +339,7 @@ int main()
     cin>>n;
 
     masukan(&n);
-    baseLogic();
+    game.baseLogic();
 
 
 
