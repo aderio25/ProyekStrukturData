@@ -3,7 +3,7 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.65
+ VERSI 0.68
  SABTU, 13 JUNI 2020
 */
 
@@ -19,8 +19,9 @@ int poin = 0;
 bool rawat = false;
 const int limit = 10;
 
-struct Stack
+struct pasien_behaviour
 {
+    // Metode Stack
     int top;
     string tmp[limit];
 
@@ -45,12 +46,22 @@ struct base
     string ambil_pasien();
 };
 
-void Stack:: initialize()
+struct teks
+{
+
+};
+
+struct game_save
+{
+
+};
+
+void pasien_behaviour:: initialize()
 {
     top = -1;
 }
 
-bool Stack:: is_empty()
+bool pasien_behaviour:: is_empty()
 {
     if(top==-1)
     {
@@ -62,7 +73,7 @@ bool Stack:: is_empty()
     }
 }
 
-bool Stack:: is_full()
+bool pasien_behaviour:: is_full()
 {
     if(top==limit-1)
     {
@@ -74,7 +85,7 @@ bool Stack:: is_full()
     }
 }
 
-void Stack:: push_pasien(string jenis)
+void pasien_behaviour:: push_pasien(string jenis)
 {
     if(is_full()==true)
     {
@@ -87,7 +98,7 @@ void Stack:: push_pasien(string jenis)
     }
 }
 
-string Stack:: pop_pasien()
+string pasien_behaviour:: pop_pasien()
 {
     if(is_empty()==true)
     {
@@ -95,12 +106,14 @@ string Stack:: pop_pasien()
     }
     else
     {
-        string pop = tmp[top--];
+        string pop = tmp[top];
+        tmp[top] = "";
+        tmp[top--];
         return pop;
     }
 }
 
-void Stack:: tampilkan()
+void pasien_behaviour:: tampilkan()
 {
     if(is_empty()==false)
     {
@@ -115,9 +128,9 @@ void Stack:: tampilkan()
     }
 }
 
-Stack ICU;
-Stack Isolasi;
-Stack Pulang;
+pasien_behaviour ICU;
+pasien_behaviour Isolasi;
+pasien_behaviour Pulang;
 
 string random_pasien()
 {
@@ -207,16 +220,17 @@ void base:: rawat_pasien(int pilihan)
 {
     if(pilihan == 1)
     {
-        cout<<"Anda telah merawat ruangan ICU";
+        cout<<"Anda telah merawat ruangan ICU"<<endl;
         ICU_done = true;
     }
     else if(pilihan == 2)
     {
-        cout<<"Anda telah merawat ruangan Isolasi";
+        cout<<"Anda telah merawat ruangan Isolasi"<<endl;
         isolasi_done = true;
     }
 
 }
+
 
 void base:: show_pasien()
 {
@@ -268,6 +282,7 @@ void base:: show_pasien()
     }
 }
 
+
 string base:: ambil_pasien()
 {
     int ans;
@@ -289,7 +304,7 @@ string base:: ambil_pasien()
     else
     {
         poin = poin - 10;
-        cout<<"Anda tidak dapat memilih, sebelum merawat pasiennya terlebih dahulu ";
+        cout<<"Anda tidak dapat memilih, sebelum merawat pasiennya terlebih dahulu "<<endl;
     }
 }
 
@@ -351,9 +366,24 @@ int main()
     game.show_pasien();
 
     // Second Step
-    cout<<"Masukan pilihan yang ingin dirawat : ";
-    cin>>a;
-    game.rawat_pasien(a);
+    
+    while((game.ICU_done==false) || (game.isolasi_done==false))
+    {
+        if((Isolasi.is_empty()==false) && (ICU.is_empty()==false))
+        {
+            cout<<"Masukan pilihan yang ingin dirawat : ";
+            cin>>a;
+            game.rawat_pasien(a);
+        }
+        else if((Isolasi.is_empty()==true) || (ICU.is_empty()==true))
+        {
+            cout<<"Masukan pilihan yang ingin dirawat : ";
+            cin>>a;
+            game.rawat_pasien(a);
+            break;
+        }
+        
+    }
 
     while(going)
     {
