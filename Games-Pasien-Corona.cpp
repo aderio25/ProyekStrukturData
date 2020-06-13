@@ -3,8 +3,8 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.48
- JUMAT, 12 JUNI 2020
+ VERSI 0.65
+ SABTU, 13 JUNI 2020
 */
 
 /* Test Build */
@@ -25,25 +25,32 @@ struct Stack
     string tmp[limit];
 
     void initialize();
-    bool isEmpty();
-    bool isFull();
-    void pushPasien(string jenis);
-    string popPasien();
     void tampilkan();
+    void push_pasien(string jenis);
+    string pop_pasien();
+    bool is_empty();
+    bool is_full();
 
 };
 
 struct base
 {
-    void baseLogic();
+    bool ICU_done = false;
+    bool isolasi_done = false;
+
+    void show_pasien();
+    void tujuan_pasien();
+    void reset_game();
+    void rawat_pasien(int a);
+    string ambil_pasien();
 };
 
-void Stack ::initialize()
+void Stack:: initialize()
 {
     top = -1;
 }
 
-bool Stack ::isEmpty()
+bool Stack:: is_empty()
 {
     if(top==-1)
     {
@@ -55,7 +62,7 @@ bool Stack ::isEmpty()
     }
 }
 
-bool Stack ::isFull()
+bool Stack:: is_full()
 {
     if(top==limit-1)
     {
@@ -67,9 +74,9 @@ bool Stack ::isFull()
     }
 }
 
-void Stack ::pushPasien(string jenis)
+void Stack:: push_pasien(string jenis)
 {
-    if(isFull()==true)
+    if(is_full()==true)
     {
         cout<<"Ruangan Penuh"<<endl;
     }
@@ -80,21 +87,22 @@ void Stack ::pushPasien(string jenis)
     }
 }
 
-string Stack ::popPasien()
+string Stack:: pop_pasien()
 {
-    if(isEmpty()==true)
+    if(is_empty()==true)
     {
         cout<<"Kosong"<<endl;
     }
     else
     {
-        return tmp[top--];
+        string pop = tmp[top--];
+        return pop;
     }
 }
 
-void Stack ::tampilkan()
+void Stack:: tampilkan()
 {
-    if(isEmpty()==false)
+    if(is_empty()==false)
     {
         for(int i=top;i>=0;i--)
         {
@@ -111,7 +119,7 @@ Stack ICU;
 Stack Isolasi;
 Stack Pulang;
 
-string randomPasien()
+string random_pasien()
 {
 
     string tipe[3] = {"Positif Parah","Positif Ringan","Negatif"};
@@ -134,7 +142,7 @@ void masukan(int *level)
 
     for(auto i(0);i<*(level)*2;i++)
     {
-        get = randomPasien();
+        get = random_pasien();
         cout<<get<<endl;
 
         cout<<"Pilih : "<<endl;
@@ -145,7 +153,7 @@ void masukan(int *level)
 
             if(get=="Positif Parah")
             {
-                ICU.pushPasien(get);
+                ICU.push_pasien(get);
                 poin = poin + 10;
                 cout<<"Benar"<<endl;
             }
@@ -161,7 +169,7 @@ void masukan(int *level)
 
             if(get=="Positif Ringan")
             {
-                Isolasi.pushPasien(get);
+                Isolasi.push_pasien(get);
                 poin = poin + 10;
                 cout<<"Benar"<<endl;
             }
@@ -177,7 +185,7 @@ void masukan(int *level)
 
             if(get=="Negatif")
             {
-                Pulang.pushPasien(get);
+                Pulang.push_pasien(get);
                 poin = poin + 10;
                 cout<<"Benar"<<endl;
             }
@@ -195,23 +203,22 @@ void masukan(int *level)
      cout<<"Total Poin = "<<poin<<endl<<endl;
 }
 
-bool rawatPasien(int pilihan)
+void base:: rawat_pasien(int pilihan)
 {
     if(pilihan == 1)
     {
         cout<<"Anda telah merawat ruangan ICU";
-        return true;
+        ICU_done = true;
     }
     else if(pilihan == 2)
     {
         cout<<"Anda telah merawat ruangan Isolasi";
-        return true;
+        isolasi_done = true;
     }
 
-    return false;
 }
 
-void base:: baseLogic()
+void base:: show_pasien()
 {
     for(int j=0;j<1;j++)
     {
@@ -261,68 +268,68 @@ void base:: baseLogic()
     }
 }
 
-string ambilPasien()
+string base:: ambil_pasien()
 {
-    int a;
+    int ans;
 
     cout<<"Silakan pilih ";
-    cin>>a;
+    cin>>ans;
 
-    if(rawat==true)
+    if((ICU_done==true) || (isolasi_done==true))
     {
-        if(a==1)
+        if((ans==1) && (ICU_done==true))
         {
-            return ICU.popPasien();
+            return ICU.pop_pasien();
         }
-        else if(a==2)
+        else if((ans==2) && (isolasi_done==true))
         {
-            return Isolasi.popPasien();
+            return Isolasi.pop_pasien();
         }
     }
     else
     {
         poin = poin - 10;
-        cout<<"Salah ";
+        cout<<"Anda tidak dapat memilih, sebelum merawat pasiennya terlebih dahulu ";
     }
 }
 
-void tujuanPasien()
+void base:: tujuan_pasien()
 {
-    int a;
+    int ans;
 
     cout<<"Silakan pilih tujuan ";
-    cin>>a;
+    cin>>ans;
 
-    if(a==1)
+    if(ans==1)
     {
-        ICU.pushPasien(ambilPasien());
+        ICU.push_pasien(ambil_pasien());
     }
-    else if(a==2)
+    else if(ans==2)
     {
-        Isolasi.pushPasien(ambilPasien());
+        Isolasi.push_pasien(ambil_pasien());
     }
-    else if(a==3)
+    else if(ans==3)
     {
-        Pulang.pushPasien(ambilPasien());
+        Pulang.push_pasien(ambil_pasien());
     }
 
 }
 
-void resetGame()
+void base:: reset_game()
 {
-    while(ICU.popPasien() != "Kosong")
+    while(ICU.pop_pasien() != "Kosong")
     {
-        ICU.popPasien();
+        ICU.pop_pasien();
     }
 
-    while(Isolasi.popPasien() == "Kosong")
+    while(Isolasi.pop_pasien() == "Kosong")
     {
-        Isolasi.popPasien();
+        Isolasi.pop_pasien();
     }
 
-    while(Pulang.popPasien() == "Kosong")
+    while(Pulang.pop_pasien() == "Kosong")
     {
-        Pulang.popPasien();
+        Pulang.pop_pasien();
     }
 }
 
@@ -331,7 +338,8 @@ int main()
     base game;
 
     bool going = true;
-    int n;
+    int n,a;
+    string get_ambil_pasien;
 
     srand(time(NULL));
 
@@ -339,8 +347,28 @@ int main()
     cin>>n;
 
     masukan(&n);
-    game.baseLogic();
+    // First Step
+    game.show_pasien();
 
+    // Second Step
+    cout<<"Masukan pilihan yang ingin dirawat : ";
+    cin>>a;
+    game.rawat_pasien(a);
+
+    while(going)
+    {
+
+        /* Third Step
+        get_ambil_pasien = game.ambil_pasien();
+        cout<<"anda memilih pasien : "<<get_ambil_pasien;
+        */
+
+        // Fourth Step
+        game.tujuan_pasien();
+
+        game.show_pasien();
+
+    }
 
 
     return 0;
