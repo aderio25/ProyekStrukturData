@@ -3,7 +3,7 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.68
+ VERSI 0.70
  SABTU, 13 JUNI 2020
 */
 
@@ -63,7 +63,7 @@ void pasien_behaviour:: initialize()
 
 bool pasien_behaviour:: is_empty()
 {
-    if(top==-1)
+    if(top==0)
     {
         return true;
     }
@@ -318,14 +318,20 @@ void base:: tujuan_pasien()
     if(ans==1)
     {
         ICU.push_pasien(ambil_pasien());
+        poin = poin - 5;
+        cout<<"Salah, 5 poin dikurangi"<<endl;
     }
     else if(ans==2)
     {
         Isolasi.push_pasien(ambil_pasien());
+        poin = poin - 5;
+        cout<<"Salah, 5 poin dikurangi"<<endl;
     }
     else if(ans==3)
     {
         Pulang.push_pasien(ambil_pasien());
+        poin = poin + 5;
+        cout<<"Benar, 5 poin ditambahkan"<<endl;
     }
 
 }
@@ -397,6 +403,8 @@ int main()
         game.tujuan_pasien();
 
         game.show_pasien();
+
+        cout<<"Poin : "<<poin<<endl;
 
     }
 
