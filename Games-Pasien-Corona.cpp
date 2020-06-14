@@ -3,8 +3,8 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.71
- MINGGU, 13 JUNI 2020
+ VERSI 0.75
+ MINGGU, 14 JUNI 2020
 */
 
 /* Test Build */
@@ -44,6 +44,7 @@ struct base
     void reset_game();
     void rawat_pasien(int a);
     string ambil_pasien();
+    bool cek_ruangan_kosong();
 };
 
 struct teks
@@ -354,6 +355,45 @@ void base:: reset_game()
     }
 }
 
+bool base:: cek_ruangan_kosong()
+{
+    if((ICU.is_empty()==false) && (Isolasi.is_empty()==false))   
+    {
+        if((ICU.tmp[1]=="") && (Isolasi.tmp[1]==""))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if(ICU.is_empty()==true)
+    {
+        if(Isolasi.tmp[1]=="")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if(Isolasi.is_empty()==true)
+    {
+        if(ICU.tmp[1]=="")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+    
+}
+
 int main()
 {
     base game;
@@ -405,6 +445,8 @@ int main()
         game.show_pasien();
 
         cout<<"Poin : "<<poin<<endl;
+
+        going = !game.cek_ruangan_kosong();
 
     }
 
