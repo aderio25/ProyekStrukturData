@@ -3,8 +3,8 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.75
- MINGGU, 14 JUNI 2020
+ VERSI 0.76
+ SENIN, 15 JUNI 2020
 */
 
 /* Test Build */
@@ -49,7 +49,7 @@ struct base
 
 struct teks
 {
-
+    void header_version();
 };
 
 struct game_save
@@ -394,15 +394,28 @@ bool base:: cek_ruangan_kosong()
     
 }
 
+void teks:: header_version()
+{
+    cout<<"+-------------------+"<<endl;
+    cout<<"|Games Pasien Corona|"<<endl;
+    cout<<"|     Versi 0.76    |"<<endl;
+    cout<<"|  Work In Progress |"<<endl;
+    cout<<"|       Alpha       |"<<endl;
+    cout<<"+-------------------+"<<endl;
+}
+
 int main()
 {
     base game;
+    teks deskripsi;
 
     bool going = true;
     int n,a;
     string get_ambil_pasien;
 
     srand(time(NULL));
+
+    deskripsi.header_version();
 
     cout<<"Masukan level : ";
     cin>>n;
