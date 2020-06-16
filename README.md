@@ -12,3 +12,5 @@ Tujuan dibuatnya games yang bernama Co-Games atau Corona-Games yaitu untuk menya
 untuk memberi pelayanan ekstra terhadap pasien corona.
 
 Semoga dengan adanya games ini kesadaran masyarakat terhadap pandemik ini kian meningkat.
+
+*Juni 2020*
