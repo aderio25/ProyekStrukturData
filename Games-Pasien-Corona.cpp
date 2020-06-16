@@ -3,8 +3,8 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.90
- SENIN, 15 JUNI 2020
+ VERSI 0.95
+ RABU, 17 JUNI 2020
 */
 
 /* Test Build */
@@ -13,6 +13,7 @@
 #include <time.h>
 #include <iomanip>
 #include <fstream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -236,6 +237,7 @@ void masukan(int *level)
         }
 
         cout<<"----------------"<<endl;
+        
     }
 
      cout<<"Total poin = "<<poin<<endl<<endl;
@@ -565,7 +567,7 @@ void teks:: about()
     cout<<"|                  About                    |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
     cout<<"|  Nama Program : Co-Games (Covid-19 Games) |"<<endl;
-    cout<<"|  Versi        : Versi 0.90                |"<<endl;
+    cout<<"|  Versi        : Versi 0.95                |"<<endl;
     cout<<"|  Update       : 16/06/2020                |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
 
@@ -581,59 +583,44 @@ void game_save:: eksporPoin(int poin, string nama)
 {
     if(is_leaderboard_ada() == false)
     {
-        ofstream myFile("Leaderboard.txt");
+        ofstream my_file("Leaderboard.txt");
 
-        myFile<<"nama pemain\t: "<< nama;
-        myFile<<"data skor\t: "<< poin;
-        myFile.close();
+        my_file<<"   +----------------------+"<<endl;
+        my_file<<"   |      Leaderboard     |"<<endl;
+        my_file<<"   +----------------------+"<<endl;
+        my_file<<"Nama Pemain\t"<<"Skor\t"<<endl;
+        my_file<<nama<<"\t\t"<<poin;
+        my_file<<endl;
+        my_file.close();
     }
     else
     {
-        ofstream myFile;
+        ofstream my_file;
 
-        myFile.open("Leaderboard.txt", ios::app);
-        myFile<<"nama pemain\t "<<nama;
-        myFile<<"data skor\t "<<poin;
-        myFile.close();
+        my_file.open("Leaderboard.txt", ios::app);
+        my_file<<nama<<"\t\t"<<poin;
+        my_file<<endl;
+        my_file.close();
     }
 }
 
-/*
 void game_save:: imporPoin()
 {
-    ifstream myFile;
-    string output,buffer;
-    bool isData=false;
-    int poin;
-    string nama;
-    myFile.open("dataPoin.txt");
+    string teks;
+    ifstream my_file("Leaderboard.txt");
 
-    while (!isData)
+    while(getline (my_file, teks))
     {
-        getline(myFile,buffer);
-        output.append("\n"+ buffer);
-        if (buffer=="data")
-        {
-            isData==true;
-        }
-
+        cout<<teks;
+        cout<<endl;
     }
 
-    cout<<output<<endl;
+    cout<<endl;
 
-    getline(myFile,buffer);
-    cout<<buffer<<endl;
-    while(!myFile.eof())
-    {
-        myFile>>no;
-        myFile>>nama;
-        cout<<no<<" "<< nama<<endl;
-    }
+    my_file.close();
 
-//https://www.youtube.com/watch?v=E8L-RjMB8Kk
 }
 
-*/
 
 int main()
 {
@@ -645,6 +632,7 @@ int main()
     int n,a;
     string get_ambil_pasien;
     string get_nama_pemain;
+    string next;
 
     srand(time(NULL));
 
@@ -655,8 +643,12 @@ int main()
     cout<<"Masukan level : ";
     cin>>n;
 
+    system("clear");
+
     masukan(&n);
     // First Step
+
+    system("clear");
     game.show_pasien();
 
     // Second Step
@@ -703,12 +695,16 @@ int main()
     cout<<"Masukan nama anda : "<<endl;
     cin>>get_nama_pemain;
 
-    save.eksporPoin(poin,get_nama_pemain);
+    system("clear");
 
+    save.eksporPoin(poin,get_nama_pemain);
+    save.imporPoin();
+
+    cout<<"Masukan apapun untuk lanjutkan ";
+    cin>>next;
+    
     deskripsi.credits();
     deskripsi.about();
-
-
 
     return 0;
 
