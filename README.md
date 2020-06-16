@@ -7,7 +7,7 @@ terdiri dari dua tugas, *Proyek Pertama* sebagai **UTS** dan *Proyek Kedua* seba
 Inventaris baris menggunakan array dinamis, linked list, dan lain lain.
 
 ### Proyek kedua : Co-Games
-Munculnya wabah pandemik COVID-19, tenryata masih banyak masyarakat yang belum sadar terhadap urgensi kesehatan masing-masing.
+Munculnya wabah pandemik COVID-19, ternyata masih banyak masyarakat yang belum sadar terhadap urgensi kesehatan masing-masing.
 Tujuan dibuatnya games yang bernama Co-Games atau Corona-Games yaitu untuk menyadarkan betapa sulitnya tenaga kesehatan hingga rumah sakit
 untuk memberi pelayanan ekstra terhadap pasien corona.
 
