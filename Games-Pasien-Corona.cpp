@@ -3,8 +3,8 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.85
- SELASA, 16 JUNI 2020
+ VERSI 0.90
+ SENIN, 15 JUNI 2020
 */
 
 /* Test Build */
@@ -12,6 +12,7 @@
 #include <iostream>
 #include <time.h>
 #include <iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -56,12 +57,14 @@ struct teks
     void about();
     void tips();
     void lvl();
-   
+
 };
 
 struct game_save
 {
-
+    void eksporPoin(int a, string b);
+    void imporPoin();
+    bool is_leaderboard_ada();
 };
 
 void pasien_behaviour:: initialize()
@@ -174,6 +177,7 @@ void masukan(int *level)
     cout<<"|              2 = Positif Ringan           |"<<endl;
     cout<<"|              3 = negatif                  |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
+
     for(auto i(0);i<*(level)*2;i++)
     {
         get = random_pasien();
@@ -234,7 +238,7 @@ void masukan(int *level)
         cout<<"----------------"<<endl;
     }
 
-     cout<<"Total Poin = "<<poin<<endl<<endl;
+     cout<<"Total poin = "<<poin<<endl<<endl;
      cout<<endl;
     cout<<endl;
 }
@@ -257,21 +261,23 @@ void base:: rawat_pasien(int pilihan)
 
 void base:: show_pasien()
 {
-                cout<<endl;
-                cout<<endl;
-                cout<<"+-----------------------------------------------------+"<<endl;
-                cout<<"|    3. Pemain Harus memilih ruangan yang di          |"<<endl;
-                cout<<"|        sesuaikan dengan jenis dan kondisi           |"<<endl;
-                cout<<"|        pasien (pilih 1-3)                           |"<<endl;
-                cout<<"|        1. Kiri   = Ruang ICU                        |"<<endl;
-                cout<<"|        2. Tengan = Ruang Isolasai                   |"<<endl;
-                cout<<"|        3. Kanan  = Ruang keluar                     |"<<endl;
-                cout<<"+-----------------------------------------------------+"<<endl;
-                cout<<"|=====================================================|"<<endl;
-                cout<<"|                        RUANGAN                      |"<<endl;
-                cout<<"|=====================================================|"<<endl;
-                cout<<"|        1        |         2        |        3       |"<<endl;
-                cout<<"|=====================================================|"<<endl;
+
+    cout<<endl;
+    cout<<endl;
+    cout<<"+-----------------------------------------------------+"<<endl;
+    cout<<"|    3. Pemain Harus memilih ruangan yang di          |"<<endl;
+    cout<<"|        sesuaikan dengan jenis dan kondisi           |"<<endl;
+    cout<<"|        pasien (pilih 1-3)                           |"<<endl;
+    cout<<"|        1. Kiri   = Ruang ICU                        |"<<endl;
+    cout<<"|        2. Tengan = Ruang Isolasai                   |"<<endl;
+    cout<<"|        3. Kanan  = Ruang keluar                     |"<<endl;
+    cout<<"+-----------------------------------------------------+"<<endl;
+    cout<<"|=====================================================|"<<endl;
+    cout<<"|                        RUANGAN                      |"<<endl;
+    cout<<"|=====================================================|"<<endl;
+    cout<<"|        1        |         2        |        3       |"<<endl;
+    cout<<"|=====================================================|"<<endl;
+
     for(int j=0;j<1;j++)
     {
         if((ICU.top > Isolasi.top) && (ICU.top > Pulang.top))
@@ -284,7 +290,7 @@ void base:: show_pasien()
         else if((Isolasi.top > ICU.top) && (Isolasi.top > Pulang.top))
         {
             for(int i=Isolasi.top;i>=0;i--)
-            { 
+            {
                 cout<<"|"<<setw(16)<<ICU.tmp[i]<<" |"<<setw(18)<<Isolasi.tmp[i]<<"|"<<setw(16)<<Pulang.tmp[i]<<"| "<<endl;
             }
         }
@@ -318,7 +324,8 @@ void base:: show_pasien()
         }
 
     }
-                cout<<"|=====================================================|"<<endl;
+
+    cout<<"|=====================================================|"<<endl;
 }
 
 
@@ -398,7 +405,7 @@ void base:: reset_game()
 
 bool base:: cek_ruangan_kosong()
 {
-    if((ICU.is_empty()==false) && (Isolasi.is_empty()==false))   
+    if((ICU.is_empty()==false) && (Isolasi.is_empty()==false))
     {
         if((ICU.tmp[1]=="") && (Isolasi.tmp[1]==""))
         {
@@ -430,20 +437,20 @@ bool base:: cek_ruangan_kosong()
         {
             return false;
         }
-        
+
     }
-    
+
 }
 
 void teks:: header_version()
 {
-                cout<<"+-------------------+"<<endl;
-                cout<<"|      Co-Games     |"<<endl;
-                cout<<"|     Versi 0.85    |"<<endl;
-                cout<<"|  Work In Progress |"<<endl;
-                cout<<"|       Alpha       |"<<endl;
-                cout<<"+-------------------+"<<endl;
-                cout<<endl;
+    cout<<"+-------------------+"<<endl;
+    cout<<"|      Co-Games     |"<<endl;
+    cout<<"|     Versi 0.85    |"<<endl;
+    cout<<"|  Work In Progress |"<<endl;
+    cout<<"|       Alpha       |"<<endl;
+    cout<<"+-------------------+"<<endl;
+    cout<<endl;
 }
 
 void teks:: intro()
@@ -523,13 +530,7 @@ void teks:: cara()
     cout<<"+-------------------------------------------+"<<endl;
     cout<<endl;
     cout<<endl;
-    
-    
-    
-    
-    
-    
-    
+
 }
 
 void teks:: lvl()
@@ -555,7 +556,7 @@ void teks:: credits()
     cout<<"|        Muhammad Daffa Satrio Dradjat      |"<<endl;
     cout<<"|        Mujtahidul Haq Mahyunda            |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
-    
+
 }
 
 void teks:: about()
@@ -564,22 +565,86 @@ void teks:: about()
     cout<<"|                  About                    |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
     cout<<"|  Nama Program : Co-Games (Covid-19 Games) |"<<endl;
-    cout<<"|  Versi        : Versi 0.85                |"<<endl;
+    cout<<"|  Versi        : Versi 0.90                |"<<endl;
     cout<<"|  Update       : 16/06/2020                |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
-    
+
 }
 
+bool game_save:: is_leaderboard_ada()
+{
+    ifstream infile("Leaderboard.txt");
+    return infile.good();
+}
 
+void game_save:: eksporPoin(int poin, string nama)
+{
+    if(is_leaderboard_ada() == false)
+    {
+        ofstream myFile("Leaderboard.txt");
+
+        myFile<<"nama pemain\t: "<< nama;
+        myFile<<"data skor\t: "<< poin;
+        myFile.close();
+    }
+    else
+    {
+        ofstream myFile;
+
+        myFile.open("Leaderboard.txt", ios::app);
+        myFile<<"nama pemain\t "<<nama;
+        myFile<<"data skor\t "<<poin;
+        myFile.close();
+    }
+}
+
+/*
+void game_save:: imporPoin()
+{
+    ifstream myFile;
+    string output,buffer;
+    bool isData=false;
+    int poin;
+    string nama;
+    myFile.open("dataPoin.txt");
+
+    while (!isData)
+    {
+        getline(myFile,buffer);
+        output.append("\n"+ buffer);
+        if (buffer=="data")
+        {
+            isData==true;
+        }
+
+    }
+
+    cout<<output<<endl;
+
+    getline(myFile,buffer);
+    cout<<buffer<<endl;
+    while(!myFile.eof())
+    {
+        myFile>>no;
+        myFile>>nama;
+        cout<<no<<" "<< nama<<endl;
+    }
+
+//https://www.youtube.com/watch?v=E8L-RjMB8Kk
+}
+
+*/
 
 int main()
 {
     base game;
     teks deskripsi;
+    game_save save;
 
     bool going = true;
     int n,a;
     string get_ambil_pasien;
+    string get_nama_pemain;
 
     srand(time(NULL));
 
@@ -595,25 +660,25 @@ int main()
     game.show_pasien();
 
     // Second Step
-    
+
     while((game.ICU_done==false) || (game.isolasi_done==false))
     {
         if((Isolasi.is_empty()==false) && (ICU.is_empty()==false))
         {
-          
+
             cout<<"Masukan pilihan yang ingin dirawat : ";
             cin>>a;
             game.rawat_pasien(a);
         }
         else if((Isolasi.is_empty()==true) || (ICU.is_empty()==true))
         {
-            
+
             cout<<"Masukan pilihan yang ingin dirawat : ";
             cin>>a;
             game.rawat_pasien(a);
             break;
         }
-        
+
     }
 
     while(going)
@@ -629,14 +694,20 @@ int main()
 
         game.show_pasien();
 
-        cout<<"Poin : "<<poin<<endl;
+        cout<<"poin : "<<poin<<endl;
 
         going = !game.cek_ruangan_kosong();
 
     }
+
+    cout<<"Masukan nama anda : "<<endl;
+    cin>>get_nama_pemain;
+
+    save.eksporPoin(poin,get_nama_pemain);
+
     deskripsi.credits();
     deskripsi.about();
-    
+
 
 
     return 0;
