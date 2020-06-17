@@ -3,11 +3,9 @@
  STRUKTUR DATA & ALGORITMA
  GAMES PASIEN CORONA
  RPL UPI 2020
- VERSI 0.95
- RABU, 17 JUNI 2020
+ VERSI 1.00
+ KAMIS, 18 JUNI 2020
 */
-
-/* Test Build */
 
 #include <iostream>
 #include <time.h>
@@ -27,7 +25,6 @@ struct pasien_behaviour
     int top;
     string tmp[limit];
 
-    void initialize();
     void tampilkan();
     void push_pasien(string jenis);
     string pop_pasien();
@@ -43,7 +40,6 @@ struct base
 
     void show_pasien();
     void tujuan_pasien();
-    void reset_game();
     void rawat_pasien(int a);
     string ambil_pasien();
     bool cek_ruangan_kosong();
@@ -63,15 +59,10 @@ struct teks
 
 struct game_save
 {
-    void eksporPoin(int a, string b);
-    void imporPoin();
+    void ekspor_poin(int a, string b);
+    void impor_poin();
     bool is_leaderboard_ada();
 };
-
-void pasien_behaviour:: initialize()
-{
-    top = -1;
-}
 
 bool pasien_behaviour:: is_empty()
 {
@@ -387,24 +378,6 @@ void base:: tujuan_pasien()
 
 }
 
-void base:: reset_game()
-{
-    while(ICU.pop_pasien() != "Kosong")
-    {
-        ICU.pop_pasien();
-    }
-
-    while(Isolasi.pop_pasien() == "Kosong")
-    {
-        Isolasi.pop_pasien();
-    }
-
-    while(Pulang.pop_pasien() == "Kosong")
-    {
-        Pulang.pop_pasien();
-    }
-}
-
 bool base:: cek_ruangan_kosong()
 {
     if((ICU.is_empty()==false) && (Isolasi.is_empty()==false))
@@ -448,9 +421,8 @@ void teks:: header_version()
 {
     cout<<"+-------------------+"<<endl;
     cout<<"|      Co-Games     |"<<endl;
-    cout<<"|     Versi 0.85    |"<<endl;
-    cout<<"|  Work In Progress |"<<endl;
-    cout<<"|       Alpha       |"<<endl;
+    cout<<"|     Versi 1.00    |"<<endl;
+    cout<<"|                   |"<<endl;
     cout<<"+-------------------+"<<endl;
     cout<<endl;
 }
@@ -567,8 +539,9 @@ void teks:: about()
     cout<<"|                  About                    |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
     cout<<"|  Nama Program : Co-Games (Covid-19 Games) |"<<endl;
-    cout<<"|  Versi        : Versi 0.95                |"<<endl;
-    cout<<"|  Update       : 16/06/2020                |"<<endl;
+    cout<<"|  Versi        : Versi 1.00                |"<<endl;
+    cout<<"|  Update       : 18/06/2020                |"<<endl;
+    cout<<"|  Source Code  : https://intip.in/COGAMES  |"<<endl;
     cout<<"+-------------------------------------------+"<<endl;
 
 }
@@ -579,7 +552,7 @@ bool game_save:: is_leaderboard_ada()
     return infile.good();
 }
 
-void game_save:: eksporPoin(int poin, string nama)
+void game_save:: ekspor_poin(int poin, string nama)
 {
     if(is_leaderboard_ada() == false)
     {
@@ -604,7 +577,7 @@ void game_save:: eksporPoin(int poin, string nama)
     }
 }
 
-void game_save:: imporPoin()
+void game_save:: impor_poin()
 {
     string teks;
     ifstream my_file("Leaderboard.txt");
@@ -646,12 +619,9 @@ int main()
     system("clear");
 
     masukan(&n);
-    // First Step
 
     system("clear");
     game.show_pasien();
-
-    // Second Step
 
     while((game.ICU_done==false) || (game.isolasi_done==false))
     {
@@ -676,12 +646,6 @@ int main()
     while(going)
     {
 
-        /* Third Step
-        get_ambil_pasien = game.ambil_pasien();
-        cout<<"anda memilih pasien : "<<get_ambil_pasien;
-        */
-
-        // Fourth Step
         game.tujuan_pasien();
 
         game.show_pasien();
@@ -697,8 +661,8 @@ int main()
 
     system("clear");
 
-    save.eksporPoin(poin,get_nama_pemain);
-    save.imporPoin();
+    save.ekspor_poin(poin,get_nama_pemain);
+    save.impor_poin();
 
     cout<<"Masukan apapun untuk lanjutkan ";
     cin>>next;
